@@ -16,9 +16,14 @@ def task_html():
 
 
 st.set_page_config(page_title="Matrix Lab", page_icon="🧩", layout="wide")
-st.caption("Matrix Lab · Student demonstration · Download results before closing")
-html = task_html()
-st.download_button("Download standalone task", html, file_name="Matrix-Lab-HR.html", mime="text/html", on_click="ignore")
-st.caption("If Bluetooth is blocked in the embedded task, download the standalone task and open it in Chrome. Download before beginning a visit.")
-components.html(html, height=1450, scrolling=True)
-
+# Let the task fill the browser viewport; no researcher tools outside its own screens.
+st.markdown("""<style>
+html, body, [data-testid="stAppViewContainer"], [data-testid="stMain"] {overflow:hidden !important;}
+[data-testid="stHeader"], [data-testid="stToolbar"], [data-testid="stDecoration"],
+[data-testid="stStatusWidget"], [data-testid="stAppDeployButton"], #MainMenu, footer {display:none !important;}
+[data-testid="stMainBlockContainer"] {padding:0 !important;max-width:none !important;}
+[data-testid="stVerticalBlock"] {gap:0 !important;}
+[data-testid="stElementContainer"]:has(iframe) {position:fixed;inset:0;width:100vw;height:100dvh;}
+iframe {width:100% !important;height:100dvh !important;border:0;display:block;}
+</style>""", unsafe_allow_html=True)
+components.html(task_html(), height=800, scrolling=False)

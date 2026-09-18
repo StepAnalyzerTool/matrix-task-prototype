@@ -57,6 +57,12 @@ Complete JSON includes heart_rate samples and events. Heart-rate CSV provides no
 
 HR data stay in the browser and its latest-visit backup; they are not sent to Python, GitHub, or a central response database. Backups update at task transitions and approximately every five seconds during HR recording; an abrupt close can lose the last few seconds. Export before closing. Reload ends the visit as interrupted; reconnect for a new visit. Avoid multiple task tabs and keep the computer awake.
 
-If the embedded Streamlit page blocks Bluetooth, use Download standalone task at the top of the page, then open the downloaded HTML in Chrome. It contains the complete task and HR recorder, works without Python, and has its own browser backup. Do this before starting a visit, not mid-visit.
+If the embedded Streamlit page blocks Bluetooth, use Download task file in researcher setup, then open the downloaded HTML in Chrome. It contains the complete task and HR recorder, works without Python, and has its own browser backup. Do this before starting a visit, not mid-visit.
 
 Verification: `node test_hr.cjs` covers standard packet decoding, malformed packets, readiness/stale gates, removal of HR from participant screens, phase recording, simulated reconnect, break/reset, end-of-visit stop, and export controls. These automated checks use synthetic samples. Actual H7 connection requires testing on the researcher Mac.
+
+## Viewport layout (version 0.4)
+
+The embedded task fills the available browser viewport. Setup uses two columns on laptops; matrix and answers appear side by side. The complete view scales down when necessary rather than requiring scrolling or clipping controls. At narrow widths it stacks vertically; very small windows may make text small. Results paginate four sessions at a time. Download help is shown only in researcher setup when Bluetooth is unavailable; no Streamlit captions or download controls surround participant screens.
+
+Selecting an answer only highlights it and enables Submit answer. The selection can be changed before submitting. Submission is the response endpoint used for response time and scoring. This behavior is unchanged.

@@ -20,7 +20,7 @@ class Monitor{
   if(!globalThis.isSecureContext)return 'Open this task using HTTPS or the downloaded task in desktop Chrome.';
   if(!globalThis.navigator?.bluetooth)return 'Bluetooth is unavailable. Open this task in Chrome on your Mac.';
   const policy=globalThis.document?.permissionsPolicy||globalThis.document?.featurePolicy;
-  if(policy&&!policy.allowsFeature('bluetooth'))return 'Bluetooth is blocked in this embedded page. Use Download standalone task above, then open that file in Chrome.';
+  if(policy&&!policy.allowsFeature('bluetooth'))return 'Bluetooth is blocked in this embedded page. Use Download task file in researcher setup, then open that file in Chrome.';
   return '';
  }
  ready(){return this.connected&&this.good>=3&&this.last&&Date.now()-this.last.received_ms<=5000&&this.last.bpm>0&&this.last.contact_detected!==false;}
@@ -31,7 +31,7 @@ class Monitor{
    this.release();this.device=await navigator.bluetooth.requestDevice({filters:[{services:['heart_rate']}]});
    this.device.addEventListener('gattserverdisconnected',this.disconnected);
    await this.subscribe();
-  }catch(e){this.message=e.name==='NotFoundError'?'No sensor selected. Try Connect heart-rate sensor again.':e.name==='SecurityError'?'Bluetooth access was blocked. Use Download standalone task above and open it in Chrome.':`Connection failed: ${e.message}`;this.onEvent('hr_connection_error',{message:this.message});this.release();}
+  }catch(e){this.message=e.name==='NotFoundError'?'No sensor selected. Try Connect heart-rate sensor again.':e.name==='SecurityError'?'Bluetooth access was blocked. Use Download task file in researcher setup and open it in Chrome.':`Connection failed: ${e.message}`;this.onEvent('hr_connection_error',{message:this.message});this.release();}
   finally{this.busy=false;this.onStatus();}
  }
  async subscribe(){
