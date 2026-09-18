@@ -9,9 +9,9 @@ ROOT = Path(__file__).resolve().parent
 
 def task_html():
     html = (ROOT / "index.html").read_text(encoding="utf-8")
-    for filename in ("engine.js", "hr.js", "app.js"):
+    for filename in ("engine.js", "hr.js", "vendor/exceljs.min.js", "workbook.js", "app.js"):
         script = (ROOT / filename).read_text(encoding="utf-8")
-        html = html.replace(f'<script src="{filename}"></script>', f"<script>{script}</script>")
+        html = html.replace(f'<script src="{filename}"></script>', "<script>" + script.replace("</script", "<\\/script") + "</script>")
     return html
 
 

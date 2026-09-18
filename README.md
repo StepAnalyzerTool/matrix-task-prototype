@@ -66,3 +66,11 @@ Verification: `node test_hr.cjs` covers standard packet decoding, malformed pack
 The embedded task fills the available browser viewport. Setup uses two columns on laptops; matrix and answers appear side by side. The complete view scales down when necessary rather than requiring scrolling or clipping controls. At narrow widths it stacks vertically; very small windows may make text small. Results paginate four sessions at a time. Download help is shown only in researcher setup when Bluetooth is unavailable; no Streamlit captions or download controls surround participant screens.
 
 Selecting an answer only highlights it and enables Submit answer. The selection can be changed before submitting. Submission is the response endpoint used for response time and scoring. This behavior is unchanged.
+
+## Answer clicks and Excel (version 0.5)
+
+Selecting an answer now immediately submits it. No separate confirmation button is used. Response time ends at the answer-option click; the visit settings log `responseMethod: answer_click`. Feedback still provides Next problem / Take a break. Older exports without this setting used a separate Submit answer click.
+
+Researcher results now provide Download Excel workbook as the primary export, with seven tabs: Visit Summary, Trials (including practice), Sessions, Breaks, Heart Rate, Beat Intervals, Event Log. Numbers and booleans retain their data types; date/time cells are Excel dates in UTC. Empty datasets retain their column headers. Every detail tab includes participant code and visit ID. Complete JSON remains available as an optional full backup. Separate CSV buttons have been replaced by the workbook.
+
+Excel generation happens entirely in the browser using bundled ExcelJS 4.4.0 (MIT license in vendor/LICENSE-ExcelJS.txt). No response data are uploaded for conversion and no external script is fetched during the visit. The bundled dependency is from the official npm package: https://registry.npmjs.org/exceljs/-/exceljs-4.4.0.tgz .
