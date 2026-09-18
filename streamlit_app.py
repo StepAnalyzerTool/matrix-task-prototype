@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parent
 
 def task_html():
     html = (ROOT / "index.html").read_text(encoding="utf-8")
-    for filename in ("engine.js", "app.js"):
+    for filename in ("engine.js", "hr.js", "app.js"):
         script = (ROOT / filename).read_text(encoding="utf-8")
         html = html.replace(f'<script src="{filename}"></script>', f"<script>{script}</script>")
     return html
@@ -17,4 +17,8 @@ def task_html():
 
 st.set_page_config(page_title="Matrix Lab", page_icon="🧩", layout="wide")
 st.caption("Matrix Lab · Student demonstration · Download results before closing")
-components.html(task_html(), height=1150, scrolling=True)
+html = task_html()
+st.download_button("Download standalone task", html, file_name="Matrix-Lab-HR.html", mime="text/html", on_click="ignore")
+st.caption("If Bluetooth is blocked in the embedded task, download the standalone task and open it in Chrome. Download before beginning a visit.")
+components.html(html, height=1450, scrolling=True)
+
